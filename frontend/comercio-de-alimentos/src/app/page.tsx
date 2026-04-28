@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 export default function MiPagina() {
-  const [datos, setDatos] = useState("Hola");
+  const [datos, setDatos] = useState(null);
 
   useEffect(() => {
     fetch('http://localhost:4000/api/saludo')
@@ -13,8 +13,8 @@ export default function MiPagina() {
 
   return (
     <div>
-      <h1>Estado de la conexión:</h1>
-      <p>{datos ? datos : "Cargando o no conectado..."}</p>
+      <h1>Mi Página</h1>
+      {datos ? <p>{datos}</p> : <p>Cargando...</p>}
     </div>
   );
 }

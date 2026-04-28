@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@layer utilities {
+  .bg-peluditos-gradient {
+    /* 135deg hace que vaya de la esquina superior izquierda a la inferior derecha */
+    background: linear-gradient(
+      to top right, 
+      #7be6dd 10%, 
+      #FAFAFA 100%
+    );
+  }
+  .bg-peluditos-gradient-reverse {
+    background: linear-gradient(
+      to bottom right, 
+      #7be6dd 10%, 
+      #FAFAFA 100%
+    );
+  }
+}
