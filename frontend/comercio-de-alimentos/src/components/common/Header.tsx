@@ -7,7 +7,6 @@ export default function Header() {
         <div className="font-bold text-xl text-[#1A535C]">Peluditos</div>
         <NavBar />
       </div>
-       
     </header>
   );
 }

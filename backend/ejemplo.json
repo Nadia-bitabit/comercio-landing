@@ -1,0 +1,50 @@
+{
+    "sys": {
+        "type": "Array"
+    },
+    "total": 1,
+    "skip": 0,
+    "limit": 100,
+    "items": [
+        {
+            "metadata": {
+                "tags": [],
+                "concepts": []
+            },
+            "sys": {
+                "space": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "Space",
+                        "id": "p8wrtoeg85we"
+                    }
+                },
+                "id": "2yL0SeW8B3rj57WLWskAHV",
+                "type": "Entry",
+                "createdAt": "2026-04-29T19:42:48.138Z",
+                "updatedAt": "2026-04-29T19:42:48.138Z",
+                "environment": {
+                    "sys": {
+                        "id": "master",
+                        "type": "Link",
+                        "linkType": "Environment"
+                    }
+                },
+                "publishedVersion": 3,
+                "revision": 1,
+                "contentType": {
+                    "sys": {
+                        "type": "Link",
+                        "linkType": "ContentType",
+                        "id": "banner"
+                    }
+                },
+                "locale": "en-US"
+            },
+            "fields": {
+                "titulo": "Todo lo que tu perro ama, en un solo lugar.",
+                "subtitulo": "Desde nutrición premium hasta los juguetes más resistentes. En Peluditos cuidamos a tu mejor amigo con productos seleccionados para su bienestar."
+            }
+        }
+    ]
+}

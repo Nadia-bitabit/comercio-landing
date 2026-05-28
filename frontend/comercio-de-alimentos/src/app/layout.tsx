@@ -26,14 +26,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-    >
+    <html lang="en">
       <body className="min-h-full flex flex-col">
-          <Header />
-          <main className="flex-1">{children}</main>
+        <Header />
+        <main className="flex-1">{children}</main>
       </body>
-
     </html>
   );
 }
