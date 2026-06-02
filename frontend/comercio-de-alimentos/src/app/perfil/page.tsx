@@ -24,7 +24,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
 
-export default function Example() {
+export default function Perfil() {
 
   const [usuario, setUsuario] = useState<any>(null);
   const router = useRouter();
@@ -41,7 +41,6 @@ export default function Example() {
       apiService.getPerfil(token)
       .then((datos) => {
         if (!datos.error) {
-          console.log("Datos del perfil:", datos);
           setUsuario(datos.usuario);
         } else {
           localStorage.removeItem("token");

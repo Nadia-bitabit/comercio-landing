@@ -4,8 +4,12 @@ const express = require('express');
 const cors = require('cors');
 const contentful = require('contentful');
 const jwt = require('jsonwebtoken');
-const LISTA_USUARIOS = require('./usuarios.js');
+const {LISTA_USUARIOS, SUCURSALES_DB} = require('./usuarios.js');
 const authValidator = require('./authValidator');
+
+const { NodeCache } = require('@cacheable/node-cache');
+
+const contactoCache = new NodeCache({ stdTTL: 60 }); 
 
 const app = express();
 const router = express.Router();
@@ -75,23 +79,19 @@ const delay = (ms) => (req, res, next) => setTimeout(next, ms);
 
 router.get("/perfil", delay(5000), (req, res) => {
     try {
-        const authHeader = req.headers.authorization;
+        const validacion = authValidator.validateTokenRules(
+            req.headers.authorization, 
+            secret, 
+            LISTA_USUARIOS
+        );
 
-        if (!authHeader) {
-            return res.status(401).send({ error: "No autorizado" });
-        }
-        // El token siempre viaja con el formato "Bearer texto_del_token"
-        // [1] se queda solo con el token
-        const token = authHeader.split(" ")[1];
-        //verificamos el token y obtenemos el payload (la información que pusimos al crear el token)
-        const payload = jwt.verify(token, secret); 
-        const usuarioDb = LISTA_USUARIOS.find(u => u.id === payload.sub);
-
-        if (!usuarioDb) {
-            return res.status(404).send({ error: "Usuario no encontrado" });
+        if (!validacion.success) {
+            return res.status(validacion.status).json({ error: validacion.message });
         }
 
-        res.send({ usuario: usuarioDb });
+        const usuario = validacion.usuario;
+
+        return res.status(200).send({usuario});
 
     } catch (err) {
         res.status(401).send({ error: "No autorizado" });
@@ -113,6 +113,38 @@ app.post("/register", (req, res) => {
     };
     LISTA_USUARIOS.push(nuevoUsuario);
     res.status(201).send({ message: "Usuario registrado exitosamente" });
+});
+
+router.get("/sucursales", async (req, res, next) => {
+    try {
+        const cacheKey = "lista_sucursales";
+
+        // Se obtienen los datos de la caché
+        const sucursalesCacheadas = await contactoCache.get(cacheKey);
+
+        if (sucursalesCacheadas) {
+            console.log("🎯 NODE-CACHE: Sucursales devueltas desde `@cacheable`");
+            return res.status(200).json({
+                origen: "cache_libreria",
+                sucursales: sucursalesCacheadas
+            });
+        }
+
+        // Si no había nada, vamos a la "base de datos"
+        console.log("🐢 NODE-CACHE MISS: Buscando sucursales frescas...");
+        const datosFrescos = SUCURSALES_DB; 
+
+        // Guardamos los datos en la caché
+        await contactoCache.set(cacheKey, datosFrescos);
+
+        return res.status(200).json({
+            origen: "base_de_datos",
+            sucursales: datosFrescos
+        });
+
+    } catch (error) {
+        next(error);
+    }
 });
 
 app.use('/', router); 

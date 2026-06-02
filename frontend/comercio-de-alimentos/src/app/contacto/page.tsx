@@ -1,5 +1,8 @@
-export default function Contacto() {
+import { apiService } from "../../services/service"
 
+export default async function Contacto() {
+
+  const sucursales = await apiService.getSucursales();
 
   return (
     <section className="bg-peluditos-gradient-reverse py-50 px-6 bg-white">
@@ -36,6 +39,20 @@ export default function Contacto() {
                 YouTube
                 <br />
                 Tiktoc
+              </p>
+              </div>
+              <div>
+              <h2 className="text-4xl text-[#1A535C] mb-6 leading-tight">
+                Sucursales
+              </h2>
+              <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+                {sucursales.sucursales.map((sucursal: any) => (
+                  <span key={sucursal.id}>
+                    {sucursal.ciudad}  {sucursal.telefono} <br />
+                      {sucursal.direccion}
+                    <br />
+                  </span>
+                ))}
               </p>
             </div>
           </div>

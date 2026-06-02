@@ -37,4 +37,13 @@ const LISTA_USUARIOS = [
   }
 ];
 
-module.exports = LISTA_USUARIOS;
+const SUCURSALES_DB = [
+    { id: 1, ciudad: "Berazategui", direccion: "Calle 14 N° 4500", telefono: "11-1234-5678" },
+    { id: 2, ciudad: "Quilmes", direccion: "Rivadavia 230", telefono: "11-8765-4321" },
+    { id: 3, ciudad: "La Plata", direccion: "Av. 7 N° 890", telefono: "221-456-7890" }
+];
+
+module.exports = {
+    LISTA_USUARIOS,
+    SUCURSALES_DB
+};

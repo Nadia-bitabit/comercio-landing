@@ -41,4 +41,14 @@ export const apiService = {
     });
     return res.json();
   },
+
+  getSucursales: async () => {
+    const res = await fetch(`${BASE_URL}/sucursales`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.json();
+  }
 };  
